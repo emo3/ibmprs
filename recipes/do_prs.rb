@@ -5,9 +5,9 @@ directory node['ibmprs']['prs_dir'] do
 end
 
 # Download the prs file
-remote_file "#{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs']}" do
-  source "#{node['ibmprs']['media_url']}/#{node['ibmprs']['prs']}"
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs']}") }
+remote_file "#{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_file']}" do
+  source "#{node['ibmprs']['media_url']}/#{node['ibmprs']['prs_file']}"
+  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_file']}") }
   owner 'root'
   group 'root'
   mode '0755'
@@ -25,7 +25,7 @@ end
 
 # untar the prs tar file
 execute 'untar_package' do
-  command "tar -xf #{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs']}"
+  command "tar -xf #{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_patch']}"
   cwd node['ibmprs']['prs_dir']
   not_if { File.exist?("#{node['ibmprs']['prs_dir']}/prereq_checker.sh") }
   user 'root'
@@ -46,7 +46,7 @@ end
 
 template "#{node['ibmprs']['prs_dir']}/run_prs.sh" do
   source 'prs.sh.erb'
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/all_results.txt") }
+  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/results.txt") }
   mode 0755
 end
 
@@ -55,12 +55,12 @@ execute 'run_prs' do
   cwd node['ibmprs']['prs_dir']
   user 'root'
   group 'root'
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/all_results.txt") }
+  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/results.txt") }
   action :run
 end
 
 execute 'find_fails' do
-  command "grep FAIL #{node['ibmprs']['prs_dir']}/all_results.txt>#{node['ibmprs']['prs_dir']}/FAIL.txt"
+  command "grep FAIL #{node['ibmprs']['prs_dir']}/results.txt>#{node['ibmprs']['prs_dir']}/FAIL.txt"
   cwd node['ibmprs']['prs_dir']
   user 'root'
   group 'root'
