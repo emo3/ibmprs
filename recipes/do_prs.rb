@@ -44,11 +44,6 @@ execute 'untar_patch' do
   action :run
 end
 
-selinux_state 'SELinux Permissive' do
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/all_results.txt") }
-  action :permissive
-end
-
 template "#{node['ibmprs']['prs_dir']}/run_prs.sh" do
   source 'prs.sh.erb'
   not_if { File.exist?("#{node['ibmprs']['prs_dir']}/all_results.txt") }
@@ -71,11 +66,6 @@ execute 'find_fails' do
   group 'root'
   not_if { File.exist?("#{node['ibmprs']['prs_dir']}/FAIL.txt") }
   action :run
-end
-
-selinux_state 'SELinux Enforcing' do
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/all_results.txt") }
-  action :enforcing
 end
 
 # print out the FAIL file

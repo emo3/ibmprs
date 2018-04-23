@@ -6,7 +6,7 @@
 
 require 'spec_helper'
 
-describe 'ibmprs::default' do
+describe 'ibmprs::do_prs' do
   context 'When all attributes are default, on CentOS 7.4.1708' do
     let(:chef_run) do
       # for a complete list of available platforms and versions see:
