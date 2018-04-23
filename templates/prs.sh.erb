@@ -1,0 +1,9 @@
+export TEMP=/tmp
+export TMP=/tmp
+rm -f <%= node['nc_base']['prs_dir'] %>/all_results.txt
+<%
+node['nc_base']['prs_codes'].each do |code|
+%>
+<%= node['nc_base']['prs_dir'] %>/prereq_checker.sh <%= code %>
+cat <%= node['nc_base']['prs_dir'] %>/result.txt >> <%= node['nc_base']['prs_dir'] %>/all_results.txt
+<% end %>
