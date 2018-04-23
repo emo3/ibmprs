@@ -21,7 +21,7 @@ platforms:
 suites:
   - name: ibmprs
     run_list:
-      - recipe[ibmprs::default]
+      - recipe[ibmprs::do_prs]
     verifier:
       inspec_tests:
         - test/integration/default

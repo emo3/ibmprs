@@ -1,7 +1,4 @@
 export TEMP=/tmp
 export TMP=/tmp
-<%= node['ibmprs']['prs_dir'] %>/prereq_checker.sh <%
-node['ibmprs']['prs_codes'].each do |code|
-%>
-<%= code, %>
-<% end %>
+<%= node['ibmprs']['prs_dir'] %>/prereq_checker.sh <% node['ibmprs']['prs_codes'].each do |code| %><%= code %>,<% end %>
+grep FAIL <%= node['ibmprs']['prs_dir'] %>/result.txt><%= node['ibmprs']['prs_dir'] %>/FAIL.txt

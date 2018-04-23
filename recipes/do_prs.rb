@@ -1,3 +1,6 @@
+# PRS requires bc to be installed
+package %w(bc)
+
 # Create PRS directory
 directory node['ibmprs']['prs_dir'] do
   recursive true
@@ -25,7 +28,7 @@ end
 
 # untar the prs tar file
 execute 'untar_package' do
-  command "tar -xf #{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_patch']}"
+  command "tar -xf #{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_file']}"
   cwd node['ibmprs']['prs_dir']
   not_if { File.exist?("#{node['ibmprs']['prs_dir']}/prereq_checker.sh") }
   user 'root'
@@ -37,7 +40,6 @@ end
 execute 'untar_patch' do
   command "tar -xzf #{node['ibmprs']['prs_dir']}/#{node['ibmprs']['prs_patch']}"
   cwd node['ibmprs']['prs_dir']
-  not_if { File.exist?("#{node['ibmprs']['prs_dir']}/UNIX_Linux/NOD_07040000.cfg") }
   user 'root'
   group 'root'
   umask '022'
@@ -65,7 +67,7 @@ execute 'find_fails' do
   user 'root'
   group 'root'
   not_if { File.exist?("#{node['ibmprs']['prs_dir']}/FAIL.txt") }
-  action :run
+  action :nothing
 end
 
 # print out the FAIL file
