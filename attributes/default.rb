@@ -1,0 +1,12 @@
+default['ibmprs']['package']     = 'nc81-probes.zip'
+default['ibmprs']['cots_dir']    = '/sfcots'
+default['ibmprs']['app_dir']     = "#{node['ibmprs']['cots_dir']}/apps"
+default['ibmprs']['nc_dir']      = "#{node['ibmprs']['app_dir']}/netcool"
+default['ibmprs']['media_dir']   = "#{node['ibmprs']['app_dir']}/media"
+default['ibmprs']['install_dir'] = "#{node['ibmprs']['media_dir']}/ncp81"
+default['ibmprs']['temp_dir']    = '/tmp'
+default['ibmprs']['media_url']   = 'http://10.1.1.30/media'
+default['ibmprs']['nc_act']      = 'netcool'
+default['ibmprs']['nc_grp']      = 'ncoadmin'
+default['PAP']                   = ''
+default['PA']                    = ''
